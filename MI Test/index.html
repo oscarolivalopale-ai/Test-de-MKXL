@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Mortal Kombat XL</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app" class="contenedor">
+
+    <img src="./imagenes/amarillo.png" alt="Mortal Kombat">
+
+    <!-- INICIO -->
+    <div v-if="inicio">
+        <h2>Test de Mortal Kombat</h2>
+        <p>Escribe tu nombre:</p>
+        <input type="text" v-model="nombre">
+        <br>
+        <button @click="comenzarTest">Comenzar</button>
+    </div>
+
+    <!-- TEST -->
+    <div v-show="test">
+        <h3>Jugador: {{ nombre }}</h3>
+
+        <div v-for="(pregunta, index) in preguntas" :key="index">
+            <p>{{ pregunta.texto }}</p>
+
+            <div v-for="respuesta in pregunta.respuestas">
+                <input
+                    type="radio"
+                    :name="'p'+index"
+                    :value="respuesta.puntos"
+                    v-model="pregunta.seleccion">
+                {{ respuesta.texto }}
+            </div>
+
+            <hr>
+        </div>
+
+        <button @click="finalizarTest">Ver resultado</button>
+    </div>
+
+    <!-- RESULTADO -->
+    <div v-if="resultado">
+        <h2>Resultado final</h2>
+        <p>{{ nombre }}, tu puntuación es: {{ puntos }}</p>
+
+        <p v-if="puntos <= 2">
+            Facil de hacer
+        </p>
+        <p v-else-if="puntos <= 4">
+            Si le sabes
+        </p>
+        <p v-else>
+            Experto, sin dudas
+        </p>
+
+        <button @click="reiniciar">Reiniciar test</button>
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="Script/miScript.js"></script>
+
+</body>
+</html>
